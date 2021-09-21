@@ -49,9 +49,9 @@ export class BrowseSuggestionsComponent implements OnInit {
       this.filters = new SuggestionFilters();
     }
     this.modelChanged.pipe(debounceTime(400)).subscribe(() => this.newSearch());
-    //this.newSearch(); // TODO: uncomment
 
-    this.suggestions = DUMMY_SUGGESTIONS; // TODO: remove
+    this.newSearch();
+    // this.suggestions = DUMMY_SUGGESTIONS; // TODO: remove
   }
 
   textInputChanged() {
@@ -106,11 +106,11 @@ export class BrowseSuggestionsComponent implements OnInit {
   }
 
   voteUp(suggestion: Suggestion) {
-
+    // TODO
   }
 
   voteDown(suggestion: Suggestion) {
-
+    // TODO
   }
 
   @HostListener('window:scroll')

@@ -4,7 +4,16 @@ import { Suggestion } from '../models.js';
 export function setup(app, db) {
   app.get('/api/suggestions/:id', function(req, res) {
     db.one(`
-      SELECT id, title, description, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy
+      SELECT id as "id",
+             title as "title",
+             description as "description",
+             suggestionStatus as "suggestionStatus",
+             totalVotes as "totalVotes",
+             totalComments as "totalComments",
+             createdOnUtc as "createdOnUtc",
+             createdBy as "createdBy",
+             lastModifiedOnUtc as "lastModifiedOnUtc",
+             lastModifiedBy as "lastModifiedBy"
         FROM suggestions
       WHERE id = $[id]`, { id: req.params.id })
       .then((result) => res.status(200).json(result))
@@ -13,7 +22,16 @@ export function setup(app, db) {
 
   app.get('/api/suggestions', function(req, res) {
     let selectClause = `
-      SELECT id, title, description, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy`
+      SELECT id as "id",
+             title as "title",
+             description as "description",
+             suggestionStatus as "suggestionStatus",
+             totalVotes as "totalVotes",
+             totalComments as "totalComments",
+             createdOnUtc as "createdOnUtc",
+             createdBy as "createdBy",
+             lastModifiedOnUtc as "lastModifiedOnUtc",
+             lastModifiedBy as "lastModifiedBy"`
 
     let queryBody = `
         FROM suggestions
