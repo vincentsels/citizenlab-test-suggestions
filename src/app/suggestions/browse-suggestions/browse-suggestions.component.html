@@ -1,0 +1,59 @@
+<mat-toolbar color="primary" class="mat-elevation-z3" style="height: unset; min-height: 72px; padding-top: 8px; position: relative;">
+  <form class="inverted-form horizontal-form" style="display: flex; flex-wrap: wrap;" autocomplete="off">
+
+    <!-- <mat-form-field class="width120">
+      <mat-select [(ngModel)]="filters.checkType" name="checkType" placeholder="{{ 'Check type' | translate }}" (selectionChange)="search()">
+        <mat-option [value]=""></mat-option>
+        <mat-option *ngFor="let checkType of (enums.CheckType | enumtranslate)" [value]="checkType.key">
+          {{ checkType.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field class="width160">
+      <input matInput type="text" [(ngModel)]="filters.firstName" name="firstName" placeholder="First name" (ngModelChange)="textInputChanged()" />
+    </mat-form-field>
+
+    <mat-form-field class="width160">
+      <input matInput type="text" [(ngModel)]="filters.lastName" name="lastName" placeholder="Last name" (ngModelChange)="textInputChanged()" />
+    </mat-form-field>
+
+    <mat-form-field class="width200">
+      <input matInput type="text" [(ngModel)]="filters.subject" name="subject" placeholder="Subject" (ngModelChange)="textInputChanged()" />
+    </mat-form-field>
+<!--
+    <mat-form-field class="width160">
+      <mat-select [(ngModel)]="filters.sortColumnAndOrder" name="sortColumnAndOrder" placeholder="{{ 'Sort by' | translate }}" (selectionChange)="search()"
+        [compareWith]="compareSortColumnAndOrder">
+        <mat-option [value]=""></mat-option>
+        <mat-option *ngFor="let sortColumn of sortTypes" [value]="sortColumn">
+          {{ sortColumn.description | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+<!--
+    <mat-checkbox [(ngModel)]="filters.includeExecuted" name="includeExecuted" (change)="search()">
+      {{ 'Include executed' | translate }}
+    </mat-checkbox>
+
+    <mat-checkbox [(ngModel)]="filters.unassignedOnly" name="unassignedOnly" (change)="search()">
+      {{ 'Unassigned only' | translate }}
+    </mat-checkbox> -->
+
+    <button mat-raised-button color="accent" (click)="clear()" style="margin-top: 8px; margin-bottom: 8px;">
+      Clear
+    </button>
+
+    <!-- <button mat-raised-button color="accent" (click)="download()" style="margin-top: 8px; margin-bottom: 8px;" [disabled]="downloading">
+        <mat-icon>download</mat-icon>
+    </button> -->
+  </form>
+
+  <button mat-mini-fab color="accent" routerLink="/new-mail" style="position: absolute; right: 16px; bottom: 16px">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="page-container">
+  <app-browse-mails-result-table [filters]="filters"></app-browse-mails-result-table>
+</div>

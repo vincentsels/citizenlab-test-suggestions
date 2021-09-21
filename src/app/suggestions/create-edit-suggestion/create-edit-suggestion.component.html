@@ -1,0 +1,63 @@
+<mat-toolbar class="navbar-header" color="primary" class="mat-elevation-z3">
+  <h1>
+    <ng-container *ngIf="!edit">
+      <mat-icon class="inline">add</mat-icon>
+      {{ 'New suggestion' | translate }}
+    </ng-container>
+    <ng-container *ngIf="edit">
+      <mat-icon class="inline">edit</mat-icon>
+      {{ 'Edit suggestion' | translate }}
+    </ng-container>
+  </h1>
+</mat-toolbar>
+
+<div class="page-container">
+  <div *ngIf="loading">
+    <mat-spinner diameter="16" color="accent" class="mat-progress-spinner"></mat-spinner>
+    {{ 'Loading' | translate }}...
+  </div>
+
+  <div class="alert warn warn-bg" *ngIf="suggestionId && !loading && !suggestion">
+    {{ 'This suggestion does not seem to exist' | translate }}
+  </div>
+
+  <form #suggestionForm="ngForm" autocomplete="off" *ngIf="!loading && suggestion">
+    <fieldset>
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="12px">
+        <div fxFlex="60%" fxFlex.lt-md="100%">
+          <!-- <h3>Suggestion details</h3>
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="50%">
+              <input required type="text" matInput [(ngModel)]="suggestion.firstName" name="firstName" maxlength="100"
+                placeholder="First name">
+            </mat-form-field>
+            <mat-form-field fxFlex="50%">
+              <input required type="text" matInput [(ngModel)]="suggestion.lastName" name="lastName" maxlength="100"
+                placeholder="Last name">
+            </mat-form-field>
+          </div>
+
+          <h3>Mail data</h3> -->
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="100%">
+              <input required type="text" matInput [(ngModel)]="suggestion.title" name="title" maxlength="100"
+                placeholder="{{ 'Title' | translate }}">
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="100%">
+              <textarea matInput name="description" maxlength="500" [(ngModel)]="suggestion.description" rows="8" placeholder="{{ 'Description' | translate }}" style="width: 100%"></textarea>
+            </mat-form-field>
+          </div>
+
+          <button [disabled]="!suggestionForm.form.valid || saving" (click)="save()" color="primary" mat-raised-button style="margin-bottom: 5px">
+            {{ (edit ? 'Edit' : 'Create') | translate }}
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

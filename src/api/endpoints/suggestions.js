@@ -1,7 +1,9 @@
+import { handleError } from '../common.js';
+
 export function setup(app, db) {
   app.get('/api/suggestions/:id', function(req, res) {
     db.one(`
-      SELECT id, title, body, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy
+      SELECT id, title, description, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy
         FROM suggestions
       WHERE id = $[id]`, { id: req.params.id })
       .then((result) => res.status(200).json(result))
@@ -10,7 +12,7 @@ export function setup(app, db) {
 
   app.get('/api/suggestions', function(req, res) {
     let selectClause = `
-      SELECT id, title, body, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy`
+      SELECT id, title, description, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy`
 
     let queryBody = `
         FROM suggestions
@@ -49,13 +51,13 @@ export function setup(app, db) {
   });
 
   app.post('/api/suggestions', function(req, res) {
-    const suggestion = req.body;
+    const suggestion = req.description;
     suggestion.createOnUtc = new Date();
     suggestion.lastModifiedOnUtc = new Date();
 
     db.none(`
-      INSERT INTO suggestions(id, title, body, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy)
-      VALUES ($[id], $[title], $[body], $[suggestionStatus], $[totalVotes], $[totalComments], $[createdOnUtc], $[createdBy], $[lastModifiedOnUtc], $[lastModifiedBy)`,
+      INSERT INTO suggestions(id, title, description, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy)
+      VALUES ($[id], $[title], $[description], $[suggestionStatus], $[totalVotes], $[totalComments], $[createdOnUtc], $[createdBy], $[lastModifiedOnUtc], $[lastModifiedBy)`,
       suggestion)
       .then(() => {
         console.log('Created suggestion', suggestion);
@@ -65,13 +67,13 @@ export function setup(app, db) {
   });
 
   app.put('/api/suggestions', function(req, res) {
-    const suggestion = req.body;
+    const suggestion = req.description;
 
     db.none(`
       UPDATE suggestions
          SET id = $[id],
              title = $[title],
-             body = $[body],
+             description = $[description],
              suggestionStatus = $[suggestionStatus],
              totalVotes = $[totalVotes],
              totalComments = $[totalComments],

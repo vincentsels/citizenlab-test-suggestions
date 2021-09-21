@@ -1,3 +1,5 @@
+import { handleError } from '../common.js';
+
 export function setup(app, db) {
   app.post('/api/suggestions/:suggestionId/comments', function(req, res) {
     const { suggestionId } = req.params.suggestionId;

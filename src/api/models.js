@@ -1,7 +1,7 @@
 export class Suggestion {
   id;
   title;
-  body;
+  description;
   suggestionStatus;
   totalVotes;
   totalComments;

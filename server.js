@@ -1,7 +1,7 @@
 import express from 'express';
 import { join } from 'path';
 
-import * as api from './src/api/endpoints/suggestions.js';
+import * as init from './src/api/init.js';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -9,7 +9,7 @@ export function app() {
   const distFolder = join(process.cwd(), 'dist/citizenlab-test');
 
   // Initialize the api endpoints and database
-  api.bootstrap(server);
+  init.bootstrap(server);
 
   server.use(express.static(distFolder));
 

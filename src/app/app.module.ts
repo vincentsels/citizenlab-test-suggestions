@@ -17,6 +17,7 @@ import { BrowseMailsComponent } from './mail/browse-mails/browse-mails.component
 import { BrowseMailsResultTableComponent } from './mail/browse-mails/browse-mails-result-table/browse-mails-result-table.component';
 import { LimitLengthPipe } from './common/limit-length.pipe';
 import { MatSnackbarErrorHandler } from './common/mat-snackbar-error-handler';
+import { UserService } from './user/user.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MatSnackbarErrorHandler } from './common/mat-snackbar-error-handler';
   ],
   providers: [
     MailService,
+    UserService,
     MatSnackbarErrorHandler,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 10000 } },
     { provide: ErrorHandler, useClass: MatSnackbarErrorHandler, deps: [MatSnackBar, NgZone] },
