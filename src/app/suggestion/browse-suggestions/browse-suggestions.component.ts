@@ -5,8 +5,9 @@ import { debounceTime } from 'rxjs/operators';
 import { UserService } from 'src/app/user/user.service';
 
 import { MatSnackbarErrorHandler } from '../../common/mat-snackbar-error-handler';
-import { Suggestion } from '../models';
+import { Suggestion, SuggestionStatus } from '../models';
 import { SuggestionFilters, SuggestionService } from '../suggestion.service';
+import { DUMMY_SUGGESTIONS } from './dummy-suggestions';
 
 const STORAGE_KEY_BROWSE_ACTION_FILTERS = 'browse_suggestion_filters';
 
@@ -48,7 +49,9 @@ export class BrowseSuggestionsComponent implements OnInit {
       this.filters = new SuggestionFilters();
     }
     this.modelChanged.pipe(debounceTime(400)).subscribe(() => this.newSearch());
-    this.newSearch();
+    //this.newSearch(); // TODO: uncomment
+
+    this.suggestions = DUMMY_SUGGESTIONS; // TODO: remove
   }
 
   textInputChanged() {
@@ -100,6 +103,14 @@ export class BrowseSuggestionsComponent implements OnInit {
 
   ngOnDestroy() {
     this.destroyed = true;
+  }
+
+  voteUp(suggestion: Suggestion) {
+
+  }
+
+  voteDown(suggestion: Suggestion) {
+
   }
 
   @HostListener('window:scroll')

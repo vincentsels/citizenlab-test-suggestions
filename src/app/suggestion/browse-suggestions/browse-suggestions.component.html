@@ -59,9 +59,24 @@
 
   <div *ngIf="!error && suggestions.length > 0">
     <ng-container *ngFor="let suggestion of suggestions">
-      <div class="suggestion mat-elevation-z3">
-        <h3>{{ suggestion.title }}</h3>
-        <p>{{ suggestion.description | limitlength:200 }}</p>
+      <div class="suggestion mat-elevation-z3" [routerLink]="'/suggestion/' + suggestion.id">
+        <div class="suggestion-votes">
+          <a (click)="voteUp(suggestion)" [routerLink]=""><mat-icon>arrow_drop_up</mat-icon></a>
+          20
+          <a (click)="voteDown(suggestion)" [routerLink]=""><mat-icon>arrow_drop_down</mat-icon></a>
+        </div>
+        <div>
+          <img class="suggestion-img" src="https://picsum.photos/100/100" />
+        </div>
+        <div class="suggestion-body">
+          <h3>{{ suggestion.title }}</h3>
+          <p>{{ suggestion.description | limitlength:200 }}</p>
+          <p class="suggestion-info">
+            {{ 'By' | translate }} {{ suggestion.createdBy }} {{ 'on' | translate }} {{ suggestion.createdOnUtc | date:'dd/MM/yyyy HH:mm:ss' }}
+            <br />
+            {{ suggestion.totalComments }} {{ 'comments' | translate }}
+          </p>
+        </div>
         <!-- TODO: add user and date -->
         <!-- TODO: nice image -->
       </div>

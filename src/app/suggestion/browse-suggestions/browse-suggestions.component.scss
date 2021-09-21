@@ -4,4 +4,22 @@ form {
 
 .suggestion {
   padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+
+  .suggestion-votes {
+    margin-right: 12px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .suggestion-img {
+    margin-right: 12px;
+  }
+
+  .suggestion-info {
+    opacity: 0.6;
+    font-style: italic;
+  }
 }
