@@ -1,0 +1,20 @@
+<div>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <div class="user-menu">
+      <div class="user-info">
+        <h3>{{ userName }}
+        </h3>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-select placeholder="{{ 'Language' | translate }}" name="language" [value]="language" (selectionChange)="languageChanged($event)">
+        <mat-option *ngFor="let lang of languages" [value]="lang">
+          {{ lang | translate }}
+        </mat-option>
+      </mat-select>
+      <a class="pull-right" style="margin-top: 10px; margin-bottom: 10px; font-size: smaller;" routerLink="/releasenotes">v{{version}}</a>
+    </div>
+  </mat-menu>
+</div>

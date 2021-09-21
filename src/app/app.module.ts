@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,11 +16,11 @@ import { MaterialModule } from './material.module';
 import { LimitLengthPipe } from './common/limit-length.pipe';
 import { MatSnackbarErrorHandler } from './common/mat-snackbar-error-handler';
 import { UserService } from './user/user.service';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CreateEditSuggestionComponent } from './suggestion/create-edit-suggestion/create-edit-suggestion.component';
 import { BrowseSuggestionsComponent } from './suggestion/browse-suggestions/browse-suggestions.component';
 import { SuggestionService } from './suggestion/suggestion.service';
+import { LanguageService } from './common/language.service';
+import { NavBarProfileMenuComponent } from './navbar/navbar-profile-menu/navbar-profile-menu';
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:function-name
@@ -34,6 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateEditSuggestionComponent,
     BrowseSuggestionsComponent,
     LimitLengthPipe,
+    NavBarProfileMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     SuggestionService,
+    LanguageService,
     UserService,
     MatSnackbarErrorHandler,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 10000 } },

@@ -62,7 +62,7 @@
       <div class="suggestion mat-elevation-z3" [routerLink]="'/suggestion/' + suggestion.id">
         <div class="suggestion-votes">
           <a (click)="voteUp($event, suggestion)" [routerLink]=""><mat-icon>arrow_drop_up</mat-icon></a>
-          20
+          {{ suggestion.totalVotes }}
           <a (click)="voteDown($event, suggestion)" [routerLink]=""><mat-icon>arrow_drop_down</mat-icon></a>
         </div>
         <div>
