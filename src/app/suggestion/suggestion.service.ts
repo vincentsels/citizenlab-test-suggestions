@@ -6,29 +6,29 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class SuggestionService {
-    private baseUrl = '/api/suggestions';
+  private baseUrl = '/api/suggestions';
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    browseSuggestions(filters: SuggestionFilters, page?: number) : Promise<any> {
-      return this.http.get<Suggestion[]>(this.baseUrl, { params: filters.toHttpParams(page) })
-        .toPromise();
-    }
+  browseSuggestions(filters: SuggestionFilters, page?: number) : Promise<any> {
+    return this.http.get<Suggestion[]>(this.baseUrl, { params: filters.toHttpParams(page) })
+      .toPromise();
+  }
 
-    getSuggestion(id: string) : Promise<any> {
-      return this.http.get<Suggestion>(this.baseUrl+ '/' + id)
-        .toPromise();
-    }
+  getSuggestion(id: string) : Promise<any> {
+    return this.http.get<Suggestion>(this.baseUrl+ '/' + id)
+      .toPromise();
+  }
 
-    createSuggestion(newSuggestion: Suggestion): Promise<void | Suggestion> {
-      return this.http.post<Suggestion>(this.baseUrl, newSuggestion)
-        .toPromise();
-    }
+  createSuggestion(suggestion: Suggestion): Promise<void | Suggestion> {
+    return this.http.post<Suggestion>(this.baseUrl, suggestion)
+      .toPromise();
+  }
 
-    updateSuggestion(Suggestion: Suggestion): Promise<void | Suggestion> {
-      return this.http.put<Suggestion>(this.baseUrl, Suggestion)
-        .toPromise();
-    }
+  updateSuggestion(suggestion: Suggestion): Promise<void | Suggestion> {
+    return this.http.put<Suggestion>(this.baseUrl, suggestion)
+      .toPromise();
+  }
 }
 
 export class SuggestionFilters {

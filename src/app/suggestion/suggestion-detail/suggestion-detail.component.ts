@@ -1,12 +1,12 @@
-import { Comment } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackbarErrorHandler } from 'src/app/common/mat-snackbar-error-handler';
 import { UserService } from 'src/app/user/user.service';
 import { v4 as uuid } from 'uuid';
+import { CommentService } from '../comment.service';
 
-import { Suggestion, SuggestionStatus } from '../models';
+import { Suggestion, SuggestionStatus, Comment, CommentStatus } from '../models';
 import { SuggestionService } from '../suggestion.service';
 
 @Component({
@@ -18,11 +18,12 @@ export class SuggestionDetailComponent implements OnInit {
   suggestionId: string;
   suggestion: Suggestion;
   loading: boolean;
+  commentAdded: boolean;
 
   newComment: string;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    private userService: UserService,
+    private userService: UserService, private commentService: CommentService,
     private suggestionService: SuggestionService, private snackBar: MatSnackBar,
     private errorHandler: MatSnackbarErrorHandler) {
   }
@@ -44,8 +45,26 @@ export class SuggestionDetailComponent implements OnInit {
     });
   }
 
-  add() {
-    // TODO
+  addComment() {
+    const newComment = new Comment({
+      id: uuid(),
+      suggestionId: this.suggestionId,
+      commentStatus: CommentStatus.created,
+      content: this.newComment,
+      createdBy: this.userService.getUserName(),
+      createdOnUtc: new Date(),
+      lastModifiedBy: this.userService.getUserName(),
+      lastModifiedOnUtc: new Date(),
+      totalVotes: 0,
+    });
+
+    this.commentService.createComment(newComment)
+      .then(() => {
+        this.snackBar.open('Comment created successfully', null, { panelClass: 'snackbar-success' })
+        this.suggestion.comments.unshift(newComment);
+        this.commentAdded = true;
+      })
+      .catch(err => this.errorHandler.handleError(err));
   }
 
   voteUp() {

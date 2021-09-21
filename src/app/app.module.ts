@@ -22,6 +22,7 @@ import { SuggestionService } from './suggestion/suggestion.service';
 import { LanguageService } from './common/language.service';
 import { NavBarProfileMenuComponent } from './navbar/navbar-profile-menu/navbar-profile-menu';
 import { SuggestionDetailComponent } from './suggestion/suggestion-detail/suggestion-detail.component';
+import { CommentService } from './suggestion/comment.service';
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:function-name
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     SuggestionService,
+    CommentService,
     LanguageService,
     UserService,
     MatSnackbarErrorHandler,

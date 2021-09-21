@@ -1,6 +1,6 @@
 <mat-toolbar class="navbar-header" color="primary" class="mat-elevation-z3">
   <h1>
-    <mat-icon class="inline">question</mat-icon>
+    <mat-icon class="inline">assistant</mat-icon>
     {{ 'Suggestion' | translate }}<ng-container *ngIf="suggestion">: {{ suggestion.title }}</ng-container>
   </h1>
 </mat-toolbar>
@@ -20,15 +20,19 @@
     {{ suggestion.totalComments }} {{ 'comments' | translate }}
   </p>
 
+  <mat-divider class="vertical-spaced"></mat-divider>
+
   <div class="action-list">
-    <button mat-raised-button color="primary" [routerLink]="'/suggestion/edit/' + suggestion.id"><mat-icon>edit</mat-icon> {{ 'Edit' | translate }}</button>
-    <button mat-raised-button (click)="voteUp()"><mat-icon>thumbs_up</mat-icon></button>
-    <button mat-raised-button (click)="voteUp()"><mat-icon>thumbs_down</mat-icon></button>
+    <button mat-raised-button color="primary" [routerLink]="'/edit-suggestion/' + suggestion.id"><mat-icon>edit</mat-icon> {{ 'Edit' | translate }}</button>
+    <button mat-raised-button (click)="voteUp()"><mat-icon>thumb_up</mat-icon></button>
+    <button mat-raised-button (click)="voteUp()"><mat-icon>thumb_down</mat-icon></button>
   </div>
+
+  <mat-divider class="vertical-spaced"></mat-divider>
 
   <h2>{{ 'Comments' | translate }}</h2>
 
-  <form #commentForm="ngForm" autocomplete="off">
+  <form #commentForm="ngForm" autocomplete="off" *ngIf="!commentAdded">
     <fieldset>
       <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="12px">
         <div fxFlex="60%" fxFlex.lt-md="100%">
@@ -40,13 +44,15 @@
             </mat-form-field>
           </div>
 
-          <button [disabled]="!commentForm.form.valid" (click)="add()" color="primary" mat-raised-button style="margin-bottom: 5px">
+          <button [disabled]="!commentForm.form.valid" (click)="addComment()" color="primary" mat-raised-button style="margin-bottom: 5px">
             {{ 'Add' | translate }}
           </button>
         </div>
       </div>
     </fieldset>
   </form>
+
+  <mat-divider class="vertical-spaced" *ngIf="!commentAdded && suggestion.comments && suggestion.comments.length > 0"></mat-divider>
 
   <div *ngFor="let comment of suggestion.comments">
     <div class="comment mat-elevation-z3">
