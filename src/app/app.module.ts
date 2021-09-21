@@ -21,6 +21,7 @@ import { BrowseSuggestionsComponent } from './suggestion/browse-suggestions/brow
 import { SuggestionService } from './suggestion/suggestion.service';
 import { LanguageService } from './common/language.service';
 import { NavBarProfileMenuComponent } from './navbar/navbar-profile-menu/navbar-profile-menu';
+import { SuggestionDetailComponent } from './suggestion/suggestion-detail/suggestion-detail.component';
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:function-name
@@ -37,6 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowseSuggestionsComponent,
     LimitLengthPipe,
     NavBarProfileMenuComponent,
+    SuggestionDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,24 @@ export function setup(app, db) {
              lastModifiedBy as "lastModifiedBy"
         FROM suggestions
       WHERE id = $[id]`, { id: req.params.id })
-      .then((result) => res.status(200).json(result))
+      .then((suggestion) => {
+        db.any(`
+          SELECT id as id,
+                 suggestionId as suggestionId,
+                 content as content,
+                 commentStatus as commentStatus,
+                 totalVotes as totalVotes,
+                 createdOnUtc as createdOnUtc,
+                 createdBy as createdBy,
+                 lastModifiedOnUtc as lastModifiedOnUtc,
+                 lastModifiedBy as lastModifiedBy
+            FROM comments
+           WHERE suggestionId = $[id]`, { id: req.params.id })
+          .then((comments) => {
+            suggestion.comments = comments;
+            res.status(200).json(suggestion);
+          })
+      })
       .catch(err => handleError(res, err.message, "Failed to get suggestion."));
   });
 

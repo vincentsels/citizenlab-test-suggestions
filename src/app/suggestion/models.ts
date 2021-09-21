@@ -1,6 +1,7 @@
 export class Suggestion {
   constructor(init?: Partial<Suggestion>) {
     if (init) {
+      this.comments = [];
       Object.assign(this, init);
     }
   }
@@ -14,7 +15,9 @@ export class Suggestion {
   createdOnUtc: Date;
   createdBy: string;
   lastModifiedOnUtc: Date;
-  lastModifiedBy: string
+  lastModifiedBy: string;
+
+  comments: Comment[];
 };
 
 export enum SuggestionStatus {
@@ -35,7 +38,7 @@ export class SuggestionVote {
   suggestionId: string;
   up: boolean;
   votedOnUtc: Date;
-  votedBy: string
+  votedBy: string;
 };
 
 export class Comment {
@@ -53,7 +56,7 @@ export class Comment {
   createdOnUtc: Date;
   createdBy: string;
   lastModifiedOnUtc: Date;
-  lastModifiedBy: string
+  lastModifiedBy: string;
 };
 
 export enum CommentStatus {
@@ -73,7 +76,7 @@ export class CommentHighlight {
   id: string;
   commentId: string;
   highlightedOnUtc: Date;
-  highlightedBy: string
+  highlightedBy: string;
 };
 
 export class CommentVote {
@@ -87,5 +90,5 @@ export class CommentVote {
   commentId: string;
   up: boolean;
   votedOnUtc: Date;
-  votedBy: string
+  votedBy: string;
 };

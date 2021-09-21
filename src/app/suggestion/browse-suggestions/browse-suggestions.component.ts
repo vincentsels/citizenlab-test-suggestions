@@ -50,8 +50,8 @@ export class BrowseSuggestionsComponent implements OnInit {
     }
     this.modelChanged.pipe(debounceTime(400)).subscribe(() => this.newSearch());
 
-    //this.newSearch();
-    this.suggestions = DUMMY_SUGGESTIONS; // TODO: remove
+    this.newSearch();
+    // this.suggestions = DUMMY_SUGGESTIONS; // TODO: remove
   }
 
   textInputChanged() {

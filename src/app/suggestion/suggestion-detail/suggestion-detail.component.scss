@@ -1,0 +1,26 @@
+.suggestion-info {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.comment {
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+
+  .comment-votes {
+    margin-right: 12px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .comment-img {
+    margin-right: 12px;
+  }
+
+  .comment-info {
+    opacity: 0.6;
+    font-style: italic;
+  }
+}
