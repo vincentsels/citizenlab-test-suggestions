@@ -1,7 +1,7 @@
 import express from 'express';
 import { join } from 'path';
 
-import * as api from './src/api/endpoints.js';
+import * as api from './src/api/endpoints/suggestions.js';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {

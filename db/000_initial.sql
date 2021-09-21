@@ -1,20 +1,56 @@
-CREATE TABLE mails (
-  id SERIAL PRIMARY KEY,
-  first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  postal_code TEXT,
-  city TEXT,
-  lang TEXT NOT NULL,
-  allow_public BOOLEAN NOT NULL,
-  stay_up_to_date BOOLEAN NOT NULL,
-  mail_to TEXT NOT NULL,
-  mail_subject TEXT NOT NULL,
-  mail_body TEXT NOT NULL,
-  created_on TIMESTAMP NOT NULL,
-  sent_on TIMESTAMP
+CREATE TABLE suggestions (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  suggestionStatus SMALLINT NOT NULL DEFAULT 0,
+  totalVotes INTEGER NOT NULL DEFAULT 0,
+  totalComments INTEGER NOT NULL DEFAULT 0,
+  createdOnUtc TIMESTAMP NOT NULL,
+  createdBy TEXT NOT NULL,
+  lastModifiedOnUtc TIMESTAMP NOT NULL,
+  lastModifiedBy TEXT NOT NULL
 );
 
-ALTER TABLE mails ADD CONSTRAINT uk_email UNIQUE (email);
+CREATE TABLE suggestionVotes (
+  id TEXT PRIMARY KEY,
+  suggestionId TEXT NOT NULL,
+  up BOOLEAN NOT NULL,
+  votedOnUtc TIMESTAMP NOT NULL,
+  votedBy TEXT NOT NULL
+);
 
-ALTER TABLE mails ADD CONSTRAINT fk_last_name_mails_first_name FOREIGN KEY (last_name) REFERENCES mails (first_name);
+ALTER TABLE suggestionVotes ADD CONSTRAINT uk_suggestionVotes_votedBy UNIQUE (suggestionId, votedBy);
+ALTER TABLE suggestionVotes ADD CONSTRAINT fk_suggestionId_suggestions_id FOREIGN KEY (suggestionId) REFERENCES suggestions (id);
+
+CREATE TABLE comments (
+  id TEXT PRIMARY KEY,
+  suggestionId TEXT NOT NULL,
+  content TEXT NOT NULL,
+  commentStatus SMALLINT NOT NULL DEFAULT 0,
+  totalVotes INTEGER NOT NULL DEFAULT 0,
+  createdOnUtc TIMESTAMP NOT NULL,
+  createdBy TEXT NOT NULL,
+  lastModifiedOnUtc TIMESTAMP NOT NULL,
+  lastModifiedBy TEXT NOT NULL
+);
+
+CREATE TABLE commentHighlights (
+  id TEXT PRIMARY KEY,
+  commentId TEXT NOT NULL,
+  highlightedOnUtc TIMESTAMP NOT NULL,
+  highlightedBy TEXT NOT NULL
+);
+
+ALTER TABLE commentHighlights ADD CONSTRAINT uk_commentHighlights_highlightBy UNIQUE (commentId, highlightedBy);
+ALTER TABLE commentHighlights ADD CONSTRAINT fk_commentId_comments_id FOREIGN KEY (commentId) REFERENCES comments (id);
+
+CREATE TABLE commentVotes (
+  id TEXT PRIMARY KEY,
+  commentId TEXT NOT NULL,
+  up BOOLEAN NOT NULL,
+  votedOnUtc TIMESTAMP NOT NULL,
+  votedBy TEXT NOT NULL
+);
+
+ALTER TABLE commentVotes ADD CONSTRAINT uk_commentVotes_votedBy UNIQUE (commentId, votedBy);
+ALTER TABLE commentVotes ADD CONSTRAINT fk_commentId_comments_id FOREIGN KEY (commentId) REFERENCES comments (id);
