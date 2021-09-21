@@ -15,8 +15,6 @@ export class BrowseMailsResultTableComponent implements OnInit, OnDestroy {
   @Input() public filters = new MailFilters();
   @Input() public displayedColumns = ['subject', 'sentOn'];
 
-  @Output('mailAssigned') public mailAssignedEmitter = new EventEmitter<Mail>();
-
   page = 0;
 
   loading: boolean;

@@ -1,10 +1,11 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { UserService } from 'src/app/user/user.service';
 
 import { MatSnackbarErrorHandler } from '../../common/mat-snackbar-error-handler';
+import { Suggestion } from '../models';
 import { SuggestionFilters, SuggestionService } from '../suggestion.service';
 
 const STORAGE_KEY_BROWSE_ACTION_FILTERS = 'browse_suggestion_filters';
@@ -17,14 +18,23 @@ const STORAGE_KEY_BROWSE_ACTION_FILTERS = 'browse_suggestion_filters';
 export class BrowseSuggestionsComponent implements OnInit {
   modelChanged: Subject<string> = new Subject<string>();
 
-  public problems: boolean;
-  public filters: SuggestionFilters;
-  public downloading = false;
+  problems: boolean;
+  filters: SuggestionFilters;
+  downloading = false;
 
-  public sortTypes = [
+  sortTypes = [
     { column: 'createdOnUtc', desc: true, description: 'createdOnDesc' },
     { column: 'createdOnUtc', desc: false, description: 'createdOnAsc' },
   ];
+
+  page = 0;
+
+  loading: boolean;
+  destroyed: boolean;
+  suggestions: Suggestion[] = [];
+  totalResults: number = 0;
+
+  error: string;
 
   constructor(private router: Router, private suggestionService: SuggestionService, private errorHandler: MatSnackbarErrorHandler, userService: UserService) {
     this.problems = router.url.includes('browse-problems');
@@ -37,22 +47,48 @@ export class BrowseSuggestionsComponent implements OnInit {
     } else {
       this.filters = new SuggestionFilters();
     }
-    this.modelChanged.pipe(debounceTime(400)).subscribe(() => this.search());
+    this.modelChanged.pipe(debounceTime(400)).subscribe(() => this.newSearch());
+    this.newSearch();
   }
 
   textInputChanged() {
     this.modelChanged.next();
   }
 
-  search() {
-    // TODO
+  newSearch() {
     localStorage.setItem(STORAGE_KEY_BROWSE_ACTION_FILTERS, JSON.stringify(this.filters));
+    this.search();
+  }
+
+  search(page = 0, filtersChanged = true): Promise<any> {
+    if (this.destroyed) return;
+    if (filtersChanged) {
+      page = 0;
+      this.page = 0;
+    } else {
+      if (this.totalResults === this.suggestions.length) return;
+    }
+
+    this.page = page;
+    this.error = null;
+    this.loading = true;
+    this.suggestionService.browseSuggestions(this.filters, page).then((response) => {
+      this.totalResults = response.totalResults;
+      if (filtersChanged) this.suggestions = response.results;
+      else this.suggestions = this.suggestions.concat(response.results);
+
+      if (this.totalResults > this.suggestions.length && response.results.length > 0) setTimeout(() => this.onWindowScroll()); // After redraw
+    })
+    .catch(err => this.errorHandler.handleError(err))
+    .finally(() => {
+      this.loading = false;
+    });
   }
 
   clear() {
     this.filters = new SuggestionFilters();
     localStorage.removeItem(STORAGE_KEY_BROWSE_ACTION_FILTERS);
-    setTimeout(() => this.search());
+    setTimeout(() => this.newSearch());
   }
 
   // download() {
@@ -61,6 +97,20 @@ export class BrowseSuggestionsComponent implements OnInit {
   //     .catch(err => this.errorHandler.handleError(err))
   //     .finally(() => this.downloading = false);
   // }
+
+  ngOnDestroy() {
+    this.destroyed = true;
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    if (this.loading || this.destroyed) return;
+    const buffer = 100;
+    if ((window.innerHeight + window.scrollY + buffer) >= document.body.offsetHeight) {
+      this.page++;
+      this.search(this.page, false);
+    }
+  }
 
   compareSortColumnAndOrder = (o1, o2) => o1 && o2 && o1.description === o2.description;
 }

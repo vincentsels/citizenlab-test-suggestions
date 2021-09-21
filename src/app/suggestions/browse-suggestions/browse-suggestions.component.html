@@ -11,16 +11,9 @@
     </mat-form-field> -->
 
     <mat-form-field class="width160">
-      <input matInput type="text" [(ngModel)]="filters.firstName" name="firstName" placeholder="First name" (ngModelChange)="textInputChanged()" />
+      <input matInput type="text" [(ngModel)]="filters.title" name="title" placeholder="{{ 'Title' | translate }}" (ngModelChange)="textInputChanged()" />
     </mat-form-field>
 
-    <mat-form-field class="width160">
-      <input matInput type="text" [(ngModel)]="filters.lastName" name="lastName" placeholder="Last name" (ngModelChange)="textInputChanged()" />
-    </mat-form-field>
-
-    <mat-form-field class="width200">
-      <input matInput type="text" [(ngModel)]="filters.subject" name="subject" placeholder="Subject" (ngModelChange)="textInputChanged()" />
-    </mat-form-field>
 <!--
     <mat-form-field class="width160">
       <mat-select [(ngModel)]="filters.sortColumnAndOrder" name="sortColumnAndOrder" placeholder="{{ 'Sort by' | translate }}" (selectionChange)="search()"
@@ -49,11 +42,35 @@
     </button> -->
   </form>
 
-  <button mat-mini-fab color="accent" routerLink="/new-mail" style="position: absolute; right: 16px; bottom: 16px">
+  <button mat-mini-fab color="accent" routerLink="/new-suggestion" style="position: absolute; right: 16px; bottom: 16px">
     <mat-icon>add</mat-icon>
   </button>
 </mat-toolbar>
 
 <div class="page-container">
-  <app-browse-mails-result-table [filters]="filters"></app-browse-mails-result-table>
+  <div *ngIf="error" class="error" style="margin-top: 20px">
+    <strong>Error searching</strong>
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!loading && !error && suggestions.length === 0">
+    No results found with these filters.
+  </div>
+
+  <div *ngIf="!error && suggestions.length > 0">
+    <ng-container *ngFor="suggestion of suggestions">
+      <div class="suggestion mat-elevation-z3">
+        <h4>{{ suggestion.title }}</h4>
+        <p>{{ suggestion.description | limitlength:200 }}</p>
+        <!-- TODO: add user and date -->
+        <!-- TODO: nice image -->
+      </div>
+    </ng-container>
+
+    <div *ngIf="loading" style="margin: 20px">
+      <mat-spinner diameter="16" color="accent" class="mat-progress-spinner"></mat-spinner>
+      Loading...
+    </div>
+  </div>
+
 </div>
