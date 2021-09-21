@@ -1,0 +1,87 @@
+<div *ngIf="error" class="error" style="margin-top: 20px">
+  <strong>Error searching</strong>
+  <p>{{ error }}</p>
+</div>
+
+<div *ngIf="!loading && !error && mails.length === 0">
+  No results found with these filters.
+</div>
+
+<div *ngIf="!error && mails.length > 0">
+  <mat-table [dataSource]="mails" class="mat-elevation-z4 selectable-rows condensed" style="width: 100%">
+    <!-- <ng-container matColumnDef="createdBy">
+      <mat-header-cell *matHeaderCellDef>{{ 'Created by' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Created by' | translate }}:</span>
+        {{ userService.translateUserId(element.createdBy) }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="createdOnUtc">
+      <mat-header-cell *matHeaderCellDef>{{ 'Created on' | translate  }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Date' | translate }}:</span>
+        {{ element.createdOnUtc | date:'dd/MM/yyyy' }}
+      </mat-cell>
+    </ng-container> -->
+    <!-- <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef>{{ 'Location' | translate  }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Location' | translate }}:</span>
+        <app-location [locationId]="element.locationId" [showAsLink]="false"></app-location> </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>{{ 'Type' | translate  }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Type' | translate }}:</span>
+        <a [routerLink]="'/room/' + element.locationId + (element.inspectionType === enums.InspectionType.Problem ? '/problem-report/' : '/inspection-report/') + element.inspectionId">
+          {{ enums.InspectionType[element.inspectionType] | translate }}
+        </a>
+      </mat-cell>
+    </ng-container> -->
+    <!-- <ng-container matColumnDef="checkType">
+      <mat-header-cell *matHeaderCellDef>{{ 'Check' | translate  }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Check' | translate }}:</span>
+        {{ enums.CheckType[element.checkType] | translate | limitlength }}
+      </mat-cell>
+    </ng-container> -->
+    <!-- <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>{{ 'Action description' | translate  }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Description' | translate }}:</span>
+        <span *ngIf="element.description">{{ element.description | limitlength }}</span>
+        <span *ngIf="!element.description && element.toBeDefined" class="info">{{ 'toBeDefined' | translate }}</span>
+      </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="subject">
+      <mat-header-cell *matHeaderCellDef>Subject</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">Subject</span>
+        {{ element.subject }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="sentOn">
+      <mat-header-cell *matHeaderCellDef>Sent on</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">Sent on</span>
+        {{ element.sentOn | date:'dd/MM/yyyy' }}
+      </mat-cell>
+    </ng-container>
+    <!-- <ng-container matColumnDef="executed">
+      <mat-header-cell *matHeaderCellDef>{{ 'Executed' | translate  }}</mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label">{{ 'Executed' | translate }}:</span>
+        {{ (element.executed ? 'Yes' : 'No') | translate }}
+      </mat-cell>
+    </ng-container> -->
+    <!-- <ng-container matColumnDef="assign">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element"><span class="mobile-label"></span>
+        <button mat-icon-button class="inline" (click)="assignActionToSelf(element); $event.stopPropagation();" [matTooltip]="'Assign to me' | translate"
+          *ngIf="element.owner !== userService.user.userId">
+          <mat-icon class="inline">assignment_ind</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container> -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <!-- <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openAction(row)"></mat-row> -->
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="'/mail/' + row.id"></mat-row>
+  </mat-table>
+
+  <div *ngIf="loading" style="margin: 20px">
+    <mat-spinner diameter="16" color="accent" class="mat-progress-spinner"></mat-spinner>
+    Loading...
+  </div>
+</div>

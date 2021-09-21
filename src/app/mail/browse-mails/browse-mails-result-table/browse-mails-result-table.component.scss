@@ -1,0 +1,13 @@
+.mat-column-createdBy { max-width: 150px; }
+.mat-column-createdOnUtc { max-width: 100px; }
+.mat-column-location { max-width: 250px; }
+.mat-column-type { max-width: 60px; }
+.mat-column-owner { max-width: 200px; }
+.mat-column-executed { max-width: 60px; }
+.mat-column-assign { max-width: 30px; }
+
+// Strangely, this seems to need to be here instead of globally
+// Of course, then it will only set this everywhere once this component has loaded
+::ng-deep.mat-paginator .mat-paginator-container{
+  min-height: 36px;
+}

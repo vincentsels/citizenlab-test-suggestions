@@ -1,0 +1,32 @@
+<mat-toolbar class="navbar-header mat-elevation-z6" color="primary" style="z-index: 3; position: relative;">
+  <span fxHide fxShow.xs="true">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <!-- <button mat-menu-item routerLink="configuration" *ngIf="userService.isAdmin()">{{ 'Configuration' | translate }}</button> -->
+      <button mat-menu-item routerLink="new-mail">New mail</button>
+    </mat-menu>
+  </span>
+
+  <a mat-button class="button" routerLink="/">
+    <h1>
+      <!-- <span style="font-size: 75px; letter-spacing: -5px; vertical-align: middle; margin-right: 20px;">//</span> -->
+      <mat-icon style="vertical-align: text-top;">device_hub</mat-icon>
+      Tech test
+      <!-- <small *ngIf="env !== 'PRD'" class="accent">{{ env }}</small> -->
+      <!-- <span class="env-info">
+        <small>v{{ version }}</small>
+        <small *ngIf="userService.user; let user">{{ user.userId }}</small>
+      </span> -->
+    </h1>
+  </a>
+
+  <span fxHide.xs="true">
+    <!-- <a mat-button class="navbar-hide-small button" routerLink="configuration" *ngIf="userService.isAdmin()">{{ 'Configuration' | translate }}</a> -->
+    <a mat-button class="navbar-hide-small button" routerLink="new-mail">New mail</a>
+  </span>
+
+  <div class="flex-spacer"></div>
+
+</mat-toolbar>

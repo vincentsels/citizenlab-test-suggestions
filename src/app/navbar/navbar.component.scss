@@ -1,0 +1,66 @@
+.navbar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+  height: 56px;
+
+  > .mat-button {
+    &:last-child {
+      margin-left: auto;
+    }
+  }
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.navbar-logo {
+  height: 26px;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
+}
+
+.navbar-link {
+  text-decoration: inherit;
+  flex: 1;
+}
+
+.navbar {
+  display: none;
+}
+
+.search-room-form {
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
+  font-size: small;
+}
+
+.env-info {
+  display: inline-block;
+  font-size: 50%;
+  font-weight: normal;
+  line-height: normal;
+
+  small {
+    display: block;
+  }
+}
+
+.blinking-button {
+  animation-duration: 400ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+@keyframes blink {
+  from {
+     opacity: 1;
+  }
+  to {
+     opacity: 0.5;
+  }
+}

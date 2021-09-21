@@ -1,0 +1,489 @@
+// Copied from TRM on 12/04/2021
+
+@import '~@angular/material/theming';
+// @import '~@coachcare/datepicker/theming';
+
+@include mat-core();
+$primary: mat-palette($mat-blue, 800);
+$accent:  mat-palette($mat-light-blue, 600, 100, 800);
+$warn:    mat-palette($mat-red, 600);
+$theme: mat-light-theme($primary, $accent, $warn);
+@include angular-material-theme($theme);
+@include mat-datepicker-theme($theme);
+
+$margin-default: 16px;
+$margin-small: 8px;
+$margin-inline: 4px;
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+a {
+  color: mat-color($primary);
+  text-decoration: none;
+}
+
+label {
+  font-weight: 500;
+}
+
+fieldset {
+  border: 0;
+  padding: 0.01em 0 0 0;
+  margin: 0;
+  min-width: 0;
+}
+
+body:not(:-moz-handler-blocked) fieldset {
+  display: table-cell;
+}
+
+[color="primary"] {
+  a {
+    color: white;
+  }
+}
+
+.accent {
+  color: mat-color($accent, A200);
+}
+
+.pull-right {
+  float: right;
+  margin-left: $margin-small;
+}
+
+.alert {
+  padding: $margin-default;
+  border: 1px solid rgba(0,0,0,.03);
+  box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+}
+
+.alert-code {
+  background-color: #e6e6e6;
+}
+
+.success-bg {
+  background-color: #d4edda;
+}
+
+.success {
+  color: #155724;
+}
+
+.snackbar-success {
+  background-color: #d4edda;
+  color: #155724;
+
+  .mat-simple-snackbar-action {
+    color: #155724;
+  }
+}
+
+.snackbar-warning {
+  background-color: #fff3cd;
+  color: #856404;
+
+  .mat-simple-snackbar-action {
+    color: #856404;
+  }
+}
+
+.warn-bg {
+  background-color: #fff3cd;
+}
+
+.warn {
+  color: #856404;
+}
+
+.danger {
+  color: #721c24;
+}
+
+.danger-bg {
+  background-color: #f8d7da;
+}
+
+.error {
+  background-color: mat-color($warn);
+  color: white;
+  padding: 10px;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+
+.obsolete {
+  opacity: 0.8;
+}
+
+.requested, .planned, .decommissioned {
+  opacity: 0.8;
+}
+
+.commissioned {
+  color: #155724;
+}
+
+.retiring, .decommissioned {
+  color: #721c24;
+}
+
+.info {
+  opacity: 0.8;
+}
+
+.page-container {
+  margin: $margin-default;
+}
+
+.horizontal-form > *:not(:last-child) {
+  margin-right: 12px;
+}
+
+.vertical-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-form > mat-form-field, .vertical-form > .vertical-form-row {
+  width: 100%;
+}
+
+mat-form-field:last-child {
+  margin-right: 0;
+}
+
+// Not sure why these are here. This is needed to fix layout issue on create edit inspection
+.mat-tab-body-content {
+  height: inherit !important;
+  overflow: inherit !important;
+}
+
+// Not sure why these are here. This is needed to fix layout issue on create edit inspection
+.mat-tab-body.mat-tab-body-active {
+  overflow-y: inherit !important;
+}
+
+.mat-tab-label:not(:focus) {
+  opacity: 0.8 !important; // Overwrite for readability
+}
+
+.actions > button+button {
+  margin-left: $margin-inline !important;
+}
+
+.mat-progress-spinner {
+  display: inline-block !important;
+  margin-right: $margin-small;
+}
+
+.mat-button.no-padding {
+  min-width: unset !important;
+  padding: unset !important;
+}
+
+.mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: -5px !important;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-button {
+  margin: 2px;
+}
+
+.mat-radio-group {
+  margin-bottom: $margin-default;
+}
+
+.mat-radio-group.horizontal {
+  flex-direction: row;
+  margin-bottom: 10px; // Together with a label on top of it, it is then just as high as form-fields
+
+  .mat-radio-button {
+    margin-right: $margin-default;
+    margin-bottom: $margin-small;
+  }
+}
+
+.width50 {
+  max-width: 50px;
+}
+
+.width60 {
+  max-width: 60px;
+}
+
+.width80 {
+  max-width: 80px;
+}
+
+.width100 {
+  max-width: 100px;
+}
+
+.width120 {
+  max-width: 120px;
+}
+
+.width160 {
+  max-width: 160px;
+}
+
+.width220 {
+  max-width: 220px;
+}
+
+.mat-icon-button.inline, .mat-icon-button mat-icon.inline {
+  width: inherit;
+  height: inherit;
+  line-height: inherit;
+}
+
+table, li, mat-table {
+  button.mat-icon-button {
+    opacity: 0.5;
+  }
+
+  button.mat-icon-button:hover {
+    opacity: 1;
+  }
+}
+
+.mat-icon.inline {
+  font-size: 120%;
+  vertical-align: text-bottom;
+  margin-right: $margin-inline;
+  height: unset;
+  width: unset;
+}
+
+mat-button-toggle-group {
+  // Strange that this is necessary...
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+  border: none !important;
+  height: 36px;
+  margin: 8px;
+}
+
+mat-button-toggle {
+  // Strange that this is necessary...
+  background-color: unset !important;
+
+  &.mat-button-toggle-checked {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+mat-button-toggle.img-button > button > .mat-button-toggle-label-content {
+  padding: 0 8px !important;
+  line-height: 36px !important;
+  padding-bottom: 2px !important;
+}
+
+mat-button-toggle-group.inline-buttons button > .mat-button-toggle-label-content  {
+  padding: 0 6px !important;
+  line-height: unset !important;
+}
+
+.mat-toolbar.mat-primary {
+  .mat-button-toggle {
+    color: white;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: default;
+  }
+
+  .mat-button-toggle-label-content {
+    padding-bottom: 2px;
+  }
+}
+
+.mat-button-toggle+.mat-button-toggle {
+  border-left: 1px solid rgba(0,0,0,.12);
+}
+
+.mat-form-field-suffix {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.border-right-cell {
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: rgba(0, 0, 0, 0.12);
+}
+
+button.icon-button {
+  margin-right: 8px;
+  padding: 0;
+  min-width: 36px;
+}
+
+.inverted-form {
+  .mat-hint, .mat-form-field-label, .mat-input-element:disabled {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .mat-input-element, .mat-datepicker-toggle-default-icon, .mat-form-field-suffix {
+    color: white;
+  }
+
+  .mat-checkbox {
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+
+  .mat-checkbox-frame {
+    border-color: white;
+  }
+}
+
+.mat-checkbox {
+  margin-bottom: $margin-default; // Other form components are 1.25em; but this seems better
+  margin-right: $margin-small;
+}
+
+div[fxlayout] > mat-form-field+mat-checkbox {
+  margin-top: 20px;
+}
+
+.checkbox-inline {
+  margin-top: 0px; margin-bottom: 0px; margin-left: 12px;
+
+  label {
+    font-weight: normal;
+  }
+}
+
+mat-toolbar button {
+  height: fit-content;
+  margin-top: 4px;
+  margin-right: 8px;
+}
+
+mat-button-toggle-group.img-buttons > mat-button-toggle > button > div {
+  padding: 0 8px !important;
+  line-height: 36px !important;
+}
+
+mat-divider.vertical-spaced {
+  margin-top: $margin-default;
+  margin-bottom: $margin-default;
+}
+
+.mat-table.condensed {
+  .mat-header-row, .mat-footer-row, .mat-row {
+    min-height: 36px;
+  }
+}
+
+.full-tooltip {
+  word-break: break-all !important;
+  white-space: normal !important;
+}
+
+
+// This mostly doesn't work :s
+// https://stackoverflow.com/questions/53700373/how-to-customize-the-css-for-angular-material-paginator
+// https://stackoverflow.com/questions/53755894/styling-angular-material-paginator
+::ng-deep.mat-paginator .mat-paginator-container{
+  min-height: 36px;
+}
+
+.mat-table.selectable-rows .mat-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+
+@media print {
+  .mat-select-arrow-wrapper {
+    visibility: collapse;
+  }
+}
+
+// Source: https://github.com/angular/components/issues/8494#issuecomment-359607760
+
+// By default, the mobile label shouldn't show
+.mobile-label {
+  display: none;
+}
+
+@media(max-width: 720px) {
+  // Custom header label that shows in each column, with a set width and bold font
+  .mobile-label {
+    margin-right: 6px;
+    display: inline-block;
+    font-weight: 500;
+  }
+
+  // Remove the header row altogether
+  .mat-header-row {
+    display: none;
+  }
+
+  // The row cells should display as a column, justified left, with a bit of extra padding
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 16px;
+    min-height: unset; // Tweak for Angular Material 8
+  }
+
+  // Tweaks for Angular Material 8
+  .mat-cell:first-of-type, .mat-footer-cell:first-of-type, .mat-header-cell:first-of-type {
+    padding-left: unset;
+  }
+
+  .mat-cell {
+    align-items: unset;
+    min-height: unset;
+    max-width: unset!important;
+  }
+
+  mat-footer-row::after, mat-header-row::after, mat-row::after {
+    content: unset!important;
+  }
+}
+
+.releasenotes {
+  img {
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
+    max-width: 100%;
+  }
+
+  hr {
+    margin: 30px 0px;
+    border: none;
+    background-color: #ccc;
+    color: #ccc;
+    height: 1px;
+  }
+
+  h1, h1+p {
+    display: inline-block;
+  }
+
+  blockquote {
+    opacity: 0.7;
+    padding: 8px 24px;
+    margin: 16px 0;
+    border-left: 3px solid #eaeaea;
+
+    p:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}

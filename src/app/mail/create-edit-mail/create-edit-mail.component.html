@@ -1,0 +1,74 @@
+<mat-toolbar class="navbar-header" color="primary" class="mat-elevation-z3">
+  <h1>
+    <ng-container *ngIf="!edit">
+      <mat-icon class="inline">add</mat-icon>
+      New mail
+    </ng-container>
+    <ng-container *ngIf="edit">
+      <mat-icon class="inline">edit</mat-icon>
+      Edit mail
+    </ng-container>
+  </h1>
+</mat-toolbar>
+
+<div class="page-container">
+  <div *ngIf="loading">
+    <mat-spinner diameter="16" color="accent" class="mat-progress-spinner"></mat-spinner>
+    Loading...
+  </div>
+
+  <div class="alert warn warn-bg" *ngIf="mailId && !loading && !mail">
+    A mail with this id does not seem to exist.
+  </div>
+
+  <form #mailForm="ngForm" autocomplete="off" *ngIf="!loading && mail">
+    <fieldset>
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="12px">
+        <div fxFlex="60%" fxFlex.lt-md="100%">
+          <h3>Personal data</h3>
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="50%">
+              <input required type="text" matInput [(ngModel)]="mail.firstName" name="firstName" maxlength="100"
+                placeholder="First name">
+            </mat-form-field>
+            <mat-form-field fxFlex="50%">
+              <input required type="text" matInput [(ngModel)]="mail.lastName" name="lastName" maxlength="100"
+                placeholder="Last name">
+            </mat-form-field>
+          </div>
+
+          <h3>Mail data</h3>
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="50%">
+              <input required type="text" matInput [(ngModel)]="mail.email" name="email" maxlength="100"
+                placeholder="From">
+            </mat-form-field>
+            <mat-form-field fxFlex="50%">
+              <input required type="text" matInput [(ngModel)]="mail.to" name="to" maxlength="100"
+                placeholder="To">
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="100%">
+              <input required type="text" matInput [(ngModel)]="mail.subject" name="subject" maxlength="100"
+                placeholder="Subject">
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="12px grid">
+            <mat-form-field fxFlex="100%">
+              <textarea matInput name="body" maxlength="500" [(ngModel)]="mail.body" rows="5" placeholder="Body" style="width: 100%"></textarea>
+            </mat-form-field>
+          </div>
+
+          <button [disabled]="!mailForm.form.valid || saving" (click)="save()" color="primary" mat-raised-button style="margin-bottom: 5px">
+            {{ edit ? 'Edit' : 'Create' }}
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
