@@ -61,9 +61,9 @@
     <ng-container *ngFor="let suggestion of suggestions">
       <div class="suggestion mat-elevation-z3" [routerLink]="'/suggestion/' + suggestion.id">
         <div class="suggestion-votes">
-          <a (click)="voteUp(suggestion)" [routerLink]=""><mat-icon>arrow_drop_up</mat-icon></a>
+          <a (click)="voteUp($event, suggestion)" [routerLink]=""><mat-icon>arrow_drop_up</mat-icon></a>
           20
-          <a (click)="voteDown(suggestion)" [routerLink]=""><mat-icon>arrow_drop_down</mat-icon></a>
+          <a (click)="voteDown($event, suggestion)" [routerLink]=""><mat-icon>arrow_drop_down</mat-icon></a>
         </div>
         <div>
           <img class="suggestion-img" src="https://picsum.photos/100/100" />
