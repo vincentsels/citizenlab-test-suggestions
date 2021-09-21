@@ -2,7 +2,7 @@ import { ErrorHandler, NgModule, NgZone } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
@@ -18,6 +18,14 @@ import { BrowseMailsResultTableComponent } from './mail/browse-mails/browse-mail
 import { LimitLengthPipe } from './common/limit-length.pipe';
 import { MatSnackbarErrorHandler } from './common/mat-snackbar-error-handler';
 import { UserService } from './user/user.service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+// tslint:disable-next-line:function-name
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -37,6 +45,13 @@ import { UserService } from './user/user.service';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     MailService,

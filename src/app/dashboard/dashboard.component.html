@@ -1,13 +1,13 @@
 <mat-toolbar class="navbar-header" color="primary" class="mat-elevation-z3">
   <h1>
-    <mat-icon class="inline">check</mat-icon>
-    Some page header
+    <mat-icon class="inline">dashboard</mat-icon>
+    {{ 'Dashboard' | translate }}
   </h1>
 </mat-toolbar>
 
 <div class="page-container">
   <button mat-raised-button color="primary" style="width: 200px; height: 40px; margin-bottom: 5px" routerLink="/new-mail">
     <mat-icon>add</mat-icon>
-    New mail
+    {{ 'New suggestion' | translate }}
   </button>
 </div>
