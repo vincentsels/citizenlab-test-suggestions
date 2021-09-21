@@ -1,8 +1,7 @@
 import { handleError } from '../common.js';
 
 export function setup(app, db) {
-  app.post('/api/suggestions/:suggestionId/comments', function(req, res) {
-    const { suggestionId } = req.params.suggestionId;
+  app.post('/api/comments', function(req, res) {
     const comment = req.body;
     comment.createOnUtc = new Date();
     comment.lastModifiedOnUtc = new Date();
@@ -10,13 +9,13 @@ export function setup(app, db) {
     db.tx(t => {
       const queryInsertComment = t.none(`
         INSERT INTO comments(id, suggestionId, content, commentStatus, totalVotes, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy)
-        VALUES ([id], $[suggestionId], $[content], $[commentStatus], $[totalVotes], $[createdOnUtc], $[createdBy], $[lastModifiedOnUtc], $[lastModifiedBy])`,
+        VALUES ($[id], $[suggestionId], $[content], $[commentStatus], $[totalVotes], $[createdOnUtc], $[createdBy], $[lastModifiedOnUtc], $[lastModifiedBy])`,
         comment);
       const queryUpdateSuggestionTotalComments = t.none(`
         UPDATE suggestions
            SET totalComments = totalComments + 1
          WHERE id = $[suggestionId]
-        `, { suggestionId });
+        `, { suggestionId: comment.suggestionId });
 
       t.batch([queryInsertComment, queryUpdateSuggestionTotalComments]);
     }).then(() => {
@@ -26,7 +25,7 @@ export function setup(app, db) {
     .catch(insertError => handleError(res, insertError.message, 'Failed to create comment'))
   });
 
-  app.put('/api/suggestions/:suggestionId/comments', function(req, res) {
+  app.put('/api/comments', function(req, res) {
     const comment = req.body;
 
     db.none(`

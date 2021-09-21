@@ -19,14 +19,14 @@ export function setup(app, db) {
       .then((suggestion) => {
         db.any(`
           SELECT id as id,
-                 suggestionId as suggestionId,
-                 content as content,
-                 commentStatus as commentStatus,
-                 totalVotes as totalVotes,
-                 createdOnUtc as createdOnUtc,
-                 createdBy as createdBy,
-                 lastModifiedOnUtc as lastModifiedOnUtc,
-                 lastModifiedBy as lastModifiedBy
+                 suggestionId as "suggestionId",
+                 content as "content",
+                 commentStatus as "commentStatus",
+                 totalVotes as "totalVotes",
+                 createdOnUtc as "createdOnUtc",
+                 createdBy as "createdBy",
+                 lastModifiedOnUtc as "lastModifiedOnUtc",
+                 lastModifiedBy as "lastModifiedBy"
             FROM comments
            WHERE suggestionId = $[id]`, { id: req.params.id })
           .then((comments) => {
@@ -107,6 +107,7 @@ export function setup(app, db) {
 
   app.put('/api/suggestions', function(req, res) {
     const suggestion = req.body;
+    suggestion.lastModifiedOnUtc = new Date();
 
     db.none(`
       UPDATE suggestions

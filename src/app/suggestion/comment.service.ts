@@ -6,12 +6,12 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class CommentService {
-  private baseUrl = '/api/';
+  private baseUrl = '/api/comments';
 
   constructor(private http: HttpClient) {}
 
   createComment(comment: Comment): Promise<void | Comment> {
-    return this.http.post<Comment>(this.baseUrl + 'suggestions/' + comment.suggestionId + '/comments', comment)
+    return this.http.post<Comment>(this.baseUrl, comment)
       .toPromise();
   }
 

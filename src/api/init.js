@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import pgPromise from 'pg-promise';
 import * as suggestions from './endpoints/suggestions.js'
+import * as comments from './endpoints/comments.js'
 
 export function bootstrap(app) {
   app.use(bodyParser.json());
@@ -20,4 +21,5 @@ export function bootstrap(app) {
   var db = pgPromise()(opts);
 
   suggestions.setup(app, db);
+  comments.setup(app, db);
 }

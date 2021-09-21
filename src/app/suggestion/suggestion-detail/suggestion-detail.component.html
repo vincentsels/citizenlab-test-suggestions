@@ -62,7 +62,7 @@
         <a (click)="voteCommentDown($event, comment)" [routerLink]=""><mat-icon>arrow_drop_down</mat-icon></a>
       </div>
       <div class="comment-body">
-        <p>{{ comment.description | limitlength:200 }}</p>
+        <p>{{ comment.content }}</p>
         <p class="comment-info">
           {{ 'By' | translate }} {{ comment.createdBy }} {{ 'on' | translate }} {{ comment.createdOnUtc | date:'dd/MM/yyyy HH:mm:ss' }}
         </p>
