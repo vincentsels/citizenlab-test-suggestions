@@ -1,4 +1,5 @@
 import { handleError } from '../common.js';
+import { Suggestion } from '../models.js';
 
 export function setup(app, db) {
   app.get('/api/suggestions/:id', function(req, res) {
@@ -51,23 +52,26 @@ export function setup(app, db) {
   });
 
   app.post('/api/suggestions', function(req, res) {
-    const suggestion = req.description;
-    suggestion.createOnUtc = new Date();
+    let suggestion = Object.assign(new Suggestion(), req.body);
+
+    suggestion.createdOnUtc = new Date();
     suggestion.lastModifiedOnUtc = new Date();
+
+    console.log('Creating suggestion', suggestion);
 
     db.none(`
       INSERT INTO suggestions(id, title, description, suggestionStatus, totalVotes, totalComments, createdOnUtc, createdBy, lastModifiedOnUtc, lastModifiedBy)
-      VALUES ($[id], $[title], $[description], $[suggestionStatus], $[totalVotes], $[totalComments], $[createdOnUtc], $[createdBy], $[lastModifiedOnUtc], $[lastModifiedBy)`,
+      VALUES ($[id], $[title], $[description], $[suggestionStatus], $[totalVotes], $[totalComments], $[createdOnUtc], $[createdBy], $[lastModifiedOnUtc], $[lastModifiedBy])`,
       suggestion)
       .then(() => {
-        console.log('Created suggestion', suggestion);
+        console.log('Created successfully');
         res.status(201).json(suggestion);
       })
       .catch(insertError => handleError(res, insertError.message, 'Failed to create suggestion'))
   });
 
   app.put('/api/suggestions', function(req, res) {
-    const suggestion = req.description;
+    const suggestion = req.body;
 
     db.none(`
       UPDATE suggestions

@@ -11,15 +11,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MaterialModule } from './material.module';
-import { CreateEditMailComponent } from './mail/create-edit-mail/create-edit-mail.component';
-import { MailService } from './mail/mail.service';
-import { BrowseMailsComponent } from './mail/browse-mails/browse-mails.component';
-import { BrowseMailsResultTableComponent } from './mail/browse-mails/browse-mails-result-table/browse-mails-result-table.component';
 import { LimitLengthPipe } from './common/limit-length.pipe';
 import { MatSnackbarErrorHandler } from './common/mat-snackbar-error-handler';
 import { UserService } from './user/user.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CreateEditSuggestionComponent } from './suggestion/create-edit-suggestion/create-edit-suggestion.component';
+import { BrowseSuggestionsComponent } from './suggestion/browse-suggestions/browse-suggestions.component';
+import { SuggestionService } from './suggestion/suggestion.service';
 
 // AoT requires an exported function for factories
 // tslint:disable-next-line:function-name
@@ -32,9 +31,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     NavbarComponent,
     DashboardComponent,
-    CreateEditMailComponent,
-    BrowseMailsComponent,
-    BrowseMailsResultTableComponent,
+    CreateEditSuggestionComponent,
+    BrowseSuggestionsComponent,
     LimitLengthPipe,
   ],
   imports: [
@@ -54,7 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   providers: [
-    MailService,
+    SuggestionService,
     UserService,
     MatSnackbarErrorHandler,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 10000 } },

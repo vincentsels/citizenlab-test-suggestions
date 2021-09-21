@@ -5,7 +5,7 @@ import { MatSnackbarErrorHandler } from 'src/app/common/mat-snackbar-error-handl
 import { UserService } from 'src/app/user/user.service';
 import { v4 as uuid } from 'uuid';
 
-import { Suggestion } from '../models';
+import { Suggestion, SuggestionStatus } from '../models';
 import { SuggestionService } from '../suggestion.service';
 
 @Component({
@@ -44,6 +44,9 @@ export class CreateEditSuggestionComponent implements OnInit {
           id: uuid(),
           createdBy: this.userService.getUserName(),
           lastModifiedBy: this.userService.getUserName(),
+          suggestionStatus: SuggestionStatus.created,
+          totalComments: 0,
+          totalVotes: 0,
         });
       }
     });

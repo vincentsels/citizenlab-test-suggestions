@@ -49,7 +49,7 @@
 
           <div fxLayout="row" fxLayoutGap="12px grid">
             <mat-form-field fxFlex="100%">
-              <textarea matInput name="description" maxlength="500" [(ngModel)]="suggestion.description" rows="8" placeholder="{{ 'Description' | translate }}" style="width: 100%"></textarea>
+              <textarea required matInput name="description" maxlength="5000" [(ngModel)]="suggestion.description" rows="8" placeholder="{{ 'Description' | translate }}" style="width: 100%"></textarea>
             </mat-form-field>
           </div>
 

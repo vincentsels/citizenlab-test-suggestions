@@ -58,9 +58,9 @@
   </div>
 
   <div *ngIf="!error && suggestions.length > 0">
-    <ng-container *ngFor="suggestion of suggestions">
+    <ng-container *ngFor="let suggestion of suggestions">
       <div class="suggestion mat-elevation-z3">
-        <h4>{{ suggestion.title }}</h4>
+        <h3>{{ suggestion.title }}</h3>
         <p>{{ suggestion.description | limitlength:200 }}</p>
         <!-- TODO: add user and date -->
         <!-- TODO: nice image -->
